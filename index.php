@@ -27,7 +27,7 @@ switch($action){
         }
         break;
     case "play":
-        $gameid = $_POST["gameid"];
+        $gameid = intval($_POST["gameid"]);
         $game = new Game();
         if($game->importFromId($gameid) === false){
             echo json_encode(["error" => "Failed to load game"]);
