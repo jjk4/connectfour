@@ -81,5 +81,23 @@
             }
 
         }
+        public function getNextPlayer(){
+            $player1 = 0;
+            $player2 = 0;
+            foreach($this->gamestate as $row){
+                foreach($row as $cell){
+                    if($cell == 1){
+                        $player1++;
+                    } elseif($cell == 2){
+                        $player2++;
+                    }
+                }
+            }
+            if($player1 > $player2){
+                return 2;
+            } else {
+                return 1;
+            }
+        }
 
     }

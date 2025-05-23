@@ -29,15 +29,43 @@ switch($action){
             echo json_encode(["gameid" => $result]);
         }
         break;
+
+    case "getGame":
+        $gameid = intval($_POST["gameid"]);
+        $game = new Game();
+        if($game->importFromId($gameid) === false){
+            echo json_encode(["error" => "Failed to load game"]);
+            die();
+        }
+        echo $game->toJson();
+        break;
+
     case "play":
         $gameid = intval($_POST["gameid"]);
         $game = new Game();
         if($game->importFromId($gameid) === false){
             echo json_encode(["error" => "Failed to load game"]);
             die();
-        } else {
-            echo $game->toJson();
         }
+        $player = intval($_POST["player"]);
+        if($player != 1 && $player != 2){
+            echo json_encode(["error" => "Invalid player"]);
+            die();
+        }
+        if($game->getNextPlayer() != $player){
+            echo json_encode(["error" => "Not your turn"]);
+            die();
+        }
+        $column = intval($_POST["column"]);
+        if($column < 0 || $column > 6){
+            echo json_encode(["error" => "Invalid column"]);
+            die();
+        }
+
+
+        echo $game->toJson();
+        break;
+        
 
 
 }
