@@ -9,10 +9,10 @@ if ($db->connect_error) {
     die();
 }
 
-if(!isset($_GET["action"])){
-    echo json_encode(["error" => "No action specified"]);
-    die();
-}
+// if(!isset($_GET["action"])){
+//     echo json_encode(["error" => "No action specified"]);
+//     die();
+// }
 $action = $_GET["action"];
 $action = "createGame"; // For testing purposes
 switch($action){
