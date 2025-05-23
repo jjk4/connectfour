@@ -28,25 +28,14 @@
         public function importFromId($id): bool{
             global $db;
             $stmt = $db->prepare(query: "SELECT game_data FROM `games` WHERE id = ?");
-            if($stmt === false){
-                return false;
-            }
             $stmt->bind_param("i", $id);
-            if($stmt->execute() === false){
-                return false;
-            }
-            if($stmt->num_rows() == 0){
-                return false;
-            }
             $stmt->bind_result($game_data);
             if ($stmt->fetch()) {
                 $this->gamestate = json_decode($game_data, associative: true);
-                if($this->gamestate === null){
-                    return false;
-                }
                 $this->gameid = $id;
                 return true;
             } else {
+                var_dump($stmt->error);
                 return false;
             }
         }
