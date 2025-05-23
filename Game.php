@@ -28,8 +28,23 @@
         public function saveNew(){
             global $db;
             if(!isset($this->gameid)){ // Neues Spiel erstellen
-                $this->gameid = rand(min: 100000, max: 999999);
                 $this->gameid = 503011; // For testing purposes
+                $overflow_counter = 0;
+                while($overflow_counter < 100){
+                    $db->query("SELECT id FROM `games` WHERE id = $this->gameid");
+                    if($db->affected_rows == 0){
+                        break;
+                    } else {
+                        $this->gameid = rand(min: 100000, max: 999999);
+                        $overflow_counter++;
+                    }
+                }
+                if($overflow_counter == 100){
+                    return false;
+                }
+                
+                $this->gameid = rand(min: 100000, max: 999999);
+                
                 $stmt = $db->prepare(query: "INSERT INTO `games` (`id`, `last_used`, `game_data`) VALUES (?, current_timestamp(), ?)");
 
                 if($stmt === false){
