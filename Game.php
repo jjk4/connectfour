@@ -28,9 +28,9 @@
         public function importFromId($id): bool{
             global $db;
             $stmt = $db->prepare(query: "SELECT game_data FROM `games` WHERE id = ?");
-            // if($stmt === false){
-            //     return false;
-            // }
+            if($stmt === false){
+                return false;
+            }
             $stmt->bind_param("i", $id);
             // if($stmt->execute() === false){
             //     return false;
