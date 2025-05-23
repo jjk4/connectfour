@@ -36,7 +36,6 @@
                 $this->gameid = $id;
                 return true;
             } else {
-                var_dump($stmt->error);
                 return false;
             }
         }
@@ -98,6 +97,18 @@
             } else {
                 return 1;
             }
+        }
+        public function play($column, $player){
+            if($this->gamestate[0][$column] != 0){
+                return false;
+            }
+            for($i = 5; $i >= 0; $i--){
+                if($this->gamestate[$i][$column] == 0){
+                    $this->gamestate[$i][$column] = $player;
+                    break;
+                }
+            }
+            return true;
         }
 
     }

@@ -61,6 +61,10 @@ switch($action){
             echo json_encode(["error" => "Invalid column"]);
             die();
         }
+        if($game->play($column, $player) === false){
+            echo json_encode(["error" => "Invalid move"]);
+            die();
+        }
 
 
         echo $game->toJson();
