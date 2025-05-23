@@ -32,9 +32,9 @@
                 return false;
             }
             $stmt->bind_param("i", $id);
-            // if($stmt->execute() === false){
-            //     return false;
-            // }
+            if($stmt->execute() === false){
+                return false;
+            }
             // if($stmt->num_rows() == 0){
             //     return false;
             // }
