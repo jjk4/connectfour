@@ -29,7 +29,8 @@
             global $db;
             if(!isset($this->gameid)){ // Neues Spiel erstellen
                 $this->gameid = rand(min: 100000, max: 999999);
-                $stmt = $db->prepare(query: "INSERT INTO `games` (`id`, `last_used`, `game_data`) VALUES ('?', current_timestamp(), '?')");
+                $stmt = $db->prepare(query: "INSERT INTO `games` (`id`, `last_used`, `game_data`) VALUES (?, current_timestamp(), ?)");
+
                 if($stmt === false){
                     return false;
                 }
