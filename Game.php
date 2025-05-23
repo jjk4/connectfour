@@ -27,6 +27,7 @@
         }
         public function importFromId($id): bool{
             global $db;
+            var_dump($id);
             $stmt = $db->prepare(query: "SELECT game_data FROM `games` WHERE id = ?");
             if($stmt === false){
                 return false;
