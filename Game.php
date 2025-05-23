@@ -142,7 +142,11 @@
                         }
                     } else {
                         $count = 0;
-                    }
+                    } 
+                }
+            }
+            foreach($this->gamestate as $row){
+                foreach($row as $cell){
                     $count = 0;
                     if($cell == 2){
                         $count++;
@@ -151,8 +155,7 @@
                         }
                     } else {
                         $count = 0;
-                    }
-                    
+                    } 
                 }
             }
             // Vertikal
@@ -167,6 +170,10 @@
                     } else {
                         $count = 0;
                     }
+                }
+            }
+            for($i = 0; $i <= 6; $i++){
+                for($j = 0; $j <= 5; $j++){
                     $count = 0;
                     if($this->gamestate[$j][$i] == 2){
                         $count++;
