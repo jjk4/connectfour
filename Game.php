@@ -29,6 +29,7 @@
             global $db;
             if(!isset($this->gameid)){ // Neues Spiel erstellen
                 $this->gameid = rand(min: 100000, max: 999999);
+                $this->gameid = 503011; // For testing purposes
                 $stmt = $db->prepare(query: "INSERT INTO `games` (`id`, `last_used`, `game_data`) VALUES (?, current_timestamp(), ?)");
 
                 if($stmt === false){
@@ -38,8 +39,6 @@
                 if($json === false){
                     return false;
                 }
-                var_dump($json);
-                var_dump($this->gameid);
                 $stmt->bind_param("is", $this->gameid, $json);
                 if($stmt->execute() === false){
                     return false;
