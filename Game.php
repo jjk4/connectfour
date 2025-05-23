@@ -29,6 +29,7 @@
             global $db;
             $stmt = $db->prepare(query: "SELECT game_data FROM `games` WHERE id = ?");
             $stmt->bind_param("i", $id);
+            $stmt->execute();
             $stmt->bind_result($game_data);
             if ($stmt->fetch()) {
                 $this->gamestate = json_decode($game_data, associative: true);
