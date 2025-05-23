@@ -13,8 +13,9 @@ if(!isset($_GET["action"])){
     echo json_encode(["error" => "No action specified"]);
     die();
 }
-
-switch($_GET["action"]){
+$action = $_GET["action"];
+$action = "createGame"; // For testing purposes
+switch($action){
     case "createGame":
         $game = new Game();
         $result = $game->saveNew();
