@@ -184,24 +184,28 @@
                     if($this->gamestate[$i][$j] != 0){
                         $count = 0;
                         for($k = 0; $k <= 3; $k++){
-                            if($this->gamestate[$i+$k][$j+$k] == $this->gamestate[$i][$j]){
-                                $count++;
-                                if($count == 4){
-                                    return $this->gamestate[$i][$j];
+                            if($i+$k < 6 && $j+$k < 7){
+                                if($this->gamestate[$i+$k][$j+$k] == $this->gamestate[$i][$j]){
+                                    $count++;
+                                    if($count == 4){
+                                        return $this->gamestate[$i][$j];
+                                    }
+                                } else {
+                                    $count = 0;
                                 }
-                            } else {
-                                $count = 0;
                             }
                         }
                         $count = 0;
                         for($k = 0; $k <= 3; $k++){
-                            if($this->gamestate[$i+$k][$j-$k] == $this->gamestate[$i][$j]){
-                                $count++;
-                                if($count == 4){
-                                    return $this->gamestate[$i][$j];
+                            if($i+$k < 6 && $j-$k >= 0){
+                                if($this->gamestate[$i+$k][$j-$k] == $this->gamestate[$i][$j]){
+                                    $count++;
+                                    if($count == 4){
+                                        return $this->gamestate[$i][$j];
+                                    }
+                                } else {
+                                    $count = 0;
                                 }
-                            } else {
-                                $count = 0;
                             }
                     }
                 }
