@@ -27,16 +27,12 @@
         }
         public function importFromId($id): bool{
             global $db;
-            var_dump($id);
             $stmt = $db->prepare(query: "SELECT game_data FROM `games` WHERE id = ?");
             if($stmt === false){
                 return false;
             }
             $stmt->bind_param("i", $id);
             if($stmt->execute() === false){
-                return false;
-            }
-            if($stmt->num_rows() == 0){
                 return false;
             }
             $stmt->bind_result($game_data);
