@@ -22,9 +22,31 @@
         public function getGameState(): array{
             return $this->gamestate;
         }
-        private function toJson(): bool|string{
+        public function toJson(): bool|string{
             return json_encode($this->gamestate);
         }
+        public function importFromId($id): bool{
+            global $db;
+            $stmt = $db->prepare(query: "SELECT game_data FROM `games` WHERE id = ?");
+            if($stmt === false){
+                return false;
+            }
+            $stmt->bind_param("i", $id);
+            if($stmt->execute() === false){
+                return false;
+            }
+            if($stmt->num_rows() == 0){
+                return false;
+            }
+            $stmt->bind_result($game_data);
+            $this->gamestate = json_decode($game_data, associative: true);
+            if($this->gamestate === null){
+                return false;
+            }
+            $this->gameid = $id;
+            return true;
+        }
+
         private function createUniqueID(): bool|int{
             global $db;
             $overflow_counter = 0;

@@ -9,12 +9,12 @@ if ($db->connect_error) {
     die();
 }
 
-// if(!isset($_GET["action"])){
-//     echo json_encode(["error" => "No action specified"]);
-//     die();
-// }
+if(!isset($_GET["action"])){
+    echo json_encode(["error" => "No action specified"]);
+    die();
+}
 $action = $_GET["action"];
-$action = "createGame"; // For testing purposes
+
 switch($action){
     case "createGame":
         $game = new Game();
@@ -26,5 +26,15 @@ switch($action){
             echo json_encode(["gameid" => $result]);
         }
         break;
+    case "play":
+        $gameid = $_POST["gameid"];
+        $game = new Game();
+        if($game->importFromId($gameid) === false){
+            echo json_encode(["error" => "Failed to load game"]);
+            die();
+        } else {
+            echo $game->toJson();
+        }
+
 
 }
