@@ -39,7 +39,20 @@ switch($action){
         }
         echo $game->toJson();
         break;
-
+    case "getNextPlayer":
+        $gameid = intval($_POST["gameid"]);
+        $game = new Game();
+        if($game->importFromId($gameid) === false){
+            echo json_encode(["error" => "Failed to load game"]);
+            die();
+        }
+        $player = $game->getNextPlayer();
+        if($player === false){
+            echo json_encode(["error" => "Failed to get next player"]);
+            die();
+        }
+        echo json_encode(["player" => $player]);
+        break;
     case "play":
         $gameid = intval($_POST["gameid"]);
         $game = new Game();
