@@ -25,11 +25,9 @@
         private function toJson(): bool|string{
             return json_encode($this->gamestate);
         }
-        public function saveNew(){
+        private function createUniqueID(): bool|int{
             global $db;
-            if(!isset($this->gameid)){ // Neues Spiel erstellen
-                $this->gameid = 503011; // For testing purposes
-                $overflow_counter = 0;
+            $overflow_counter = 0;
                 while($overflow_counter < 100){
                     $db->query("SELECT id FROM `games` WHERE id = $this->gameid");
                     if($db->affected_rows == 0){
@@ -41,10 +39,14 @@
                 }
                 if($overflow_counter == 100){
                     return false;
+                } else {
+                    return $this->gameid;
                 }
-                
-                $this->gameid = rand(min: 100000, max: 999999);
-                
+        }
+        public function saveNew(){
+            global $db;
+            if(!isset($this->gameid)){ // Neues Spiel erstellen
+                $this->gameid = $this->createUniqueID();                
                 $stmt = $db->prepare(query: "INSERT INTO `games` (`id`, `last_used`, `game_data`) VALUES (?, current_timestamp(), ?)");
 
                 if($stmt === false){
@@ -62,4 +64,5 @@
             }
 
         }
+
     }
