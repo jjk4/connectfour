@@ -37,6 +37,8 @@
                 if($json === false){
                     return false;
                 }
+                var_dump($json);
+                var_dump($this->gameid);
                 $stmt->bind_param("is", $this->gameid, $json);
                 if($stmt->execute() === false){
                     return false;
