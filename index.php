@@ -87,6 +87,22 @@ switch($action){
         }
         echo $game->toJson();
         break;
+    
+    case "checkWinner":
+        $gameid = intval($_POST["gameid"]);
+        $game = new Game();
+        if($game->importFromId($gameid) === false){
+            echo json_encode(["error" => "Failed to load game"]);
+            die();
+        }
+        $winner = $game->checkWinner();
+        if($winner === false){
+            echo json_encode(["error" => "Failed to check winner"]);
+            die();
+        } else {
+            echo json_encode(["winner" => $winner]);
+        }
+        break;
 
 
 }

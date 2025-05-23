@@ -130,5 +130,83 @@
             }
             return true;
         }
-
+        public function checkWinner(){
+            // Horizontal
+            foreach($this->gamestate as $row){
+                foreach($row as $cell){
+                    $count = 0;
+                    if($cell == 1){
+                        $count++;
+                        if($count == 4){
+                            return 1;
+                        }
+                    } else {
+                        $count = 0;
+                    }
+                    $count = 0;
+                    if($cell == 2){
+                        $count++;
+                        if($count == 4){
+                            return 2;
+                        }
+                    } else {
+                        $count = 0;
+                    }
+                    
+                }
+            }
+            // Vertikal
+            for($i = 0; $i <= 6; $i++){
+                for($j = 0; $j <= 5; $j++){
+                    $count = 0;
+                    if($this->gamestate[$j][$i] == 1){
+                        $count++;
+                        if($count == 4){
+                            return 1;
+                        }
+                    } else {
+                        $count = 0;
+                    }
+                    $count = 0;
+                    if($this->gamestate[$j][$i] == 2){
+                        $count++;
+                        if($count == 4){
+                            return 2;
+                        }
+                    } else {
+                        $count = 0;
+                    }
+                }
+            }
+            // Diagonal
+            for($i = 0; $i <= 2; $i++){
+                for($j = 0; $j <= 6; $j++){
+                    if($this->gamestate[$i][$j] != 0){
+                        $count = 0;
+                        for($k = 0; $k <= 3; $k++){
+                            if($this->gamestate[$i+$k][$j+$k] == $this->gamestate[$i][$j]){
+                                $count++;
+                                if($count == 4){
+                                    return $this->gamestate[$i][$j];
+                                }
+                            } else {
+                                $count = 0;
+                            }
+                        }
+                        $count = 0;
+                        for($k = 0; $k <= 3; $k++){
+                            if($this->gamestate[$i+$k][$j-$k] == $this->gamestate[$i][$j]){
+                                $count++;
+                                if($count == 4){
+                                    return $this->gamestate[$i][$j];
+                                }
+                            } else {
+                                $count = 0;
+                            }
+                    }
+                }
+            }
+            return 0;
+        }
     }
+}
