@@ -80,6 +80,26 @@
             }
 
         }
+        public function save(){
+            global $db;
+            if(!isset($this->gameid)){
+                return false;
+            }
+            $stmt = $db->prepare(query: "UPDATE `games` SET `last_used` = current_timestamp(), `game_data` = ? WHERE id = ?");
+            if($stmt === false){
+                return false;
+            }
+            $json = $this->toJson();
+            if($json === false){
+                return false;
+            }
+            $stmt->bind_param("si", $json, $this->gameid);
+            if($stmt->execute() === false){
+                return false;
+            }
+            return true;
+        }
+
         public function getNextPlayer(){
             $player1 = 0;
             $player2 = 0;

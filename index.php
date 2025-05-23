@@ -65,7 +65,10 @@ switch($action){
             echo json_encode(["error" => "Invalid move"]);
             die();
         }
-
+        if($game->save() === false){
+            echo json_encode(["error" => "Failed to save game"]);
+            die();
+        }
 
         echo $game->toJson();
         break;
