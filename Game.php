@@ -35,13 +35,20 @@
             if($stmt->execute() === false){
                 return false;
             }
+            if($stmt->num_rows() == 0){
+                return false;
+            }
             $stmt->bind_result($game_data);
-            $this->gamestate = json_decode($game_data, associative: true);
-            // if($this->gamestate === null){
-            //     return false;
-            // }
-            $this->gameid = $id;
-            return true;
+            if ($stmt->fetch()) {
+                $this->gamestate = json_decode($game_data, associative: true);
+                if($this->gamestate === null){
+                    return false;
+                }
+                $this->gameid = $id;
+                return true;
+            } else {
+                return false;
+            }
         }
 
         private function createUniqueID(): bool|int{
